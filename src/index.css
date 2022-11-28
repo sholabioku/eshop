@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --font-family: "Poppins", sans-serif;
+  --font-family: 'Poppins', sans-serif;
   --dark-blue: #0a1930;
   --light-blue: #1f93ff;
 
@@ -36,7 +36,7 @@ body {
 
 section {
   width: 100%;
-  padding: 8rem 0;
+  padding: 4rem 0;
 }
 
 .container {
@@ -392,7 +392,7 @@ p {
   position: relative;
 }
 .--line::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 50%;
   bottom: -5px;
