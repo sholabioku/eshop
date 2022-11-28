@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
+import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 
 import styles from './Header.module.scss';
 
@@ -24,11 +26,33 @@ const cart = (
 );
 
 const Header = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const hideMenu = () => {
+    setShowMenu(false);
+  };
+
   return (
     <header>
       <div className={styles.header}>
         {logo}
-        <nav>
+        <nav
+          className={
+            showMenu ? `${styles['show-nav']}` : `${styles['hide-nav']}`
+          }
+        >
+          <div
+            className={
+              showMenu
+                ? `${styles['nav-wrapper']} ${styles['show-nav-wrapper']}`
+                : `${styles['nav-wrapper']}`
+            }
+            onClick={hideMenu}
+          ></div>
           <ul>
             <li>
               <Link to='/'>Home</Link>
@@ -46,6 +70,11 @@ const Header = () => {
             {cart}
           </div>
         </nav>
+
+        <div className={styles['menu-icon']}>
+          {cart}
+          <HiOutlineMenuAlt3 size={28} onClick={toggleMenu} />
+        </div>
       </div>
     </header>
   );
