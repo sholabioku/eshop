@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Card from '../../components/card/Card';
 import registerImg from '../../assets/register.png';
