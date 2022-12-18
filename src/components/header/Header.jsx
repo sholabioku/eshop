@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaTimes, FaUserCircle } from 'react-icons/fa';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 import { auth } from '../../firebase/config';
 import styles from './Header.module.scss';
@@ -33,6 +33,18 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : '');
 const Header = () => {
   const naviagte = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        setUsername(user.displayName);
+      } else {
+        setUsername('');
+      }
+    });
+  }, []);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -91,6 +103,10 @@ const Header = () => {
               <NavLink to='/login' className={activeLink}>
                 Login
               </NavLink>
+              <a href='#'>
+                <FaUserCircle size={16} />
+                Hi, {username}
+              </a>
               <NavLink to='/register' className={activeLink}>
                 Register
               </NavLink>
