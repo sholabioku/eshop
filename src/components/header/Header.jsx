@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaTimes, FaUserCircle } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { SET_ACTIVE_USER } from '../../redux/slice/authSlice';
 
 import { auth } from '../../firebase/config';
 import styles from './Header.module.scss';
-import { toast } from 'react-toastify';
 
 const logo = (
   <div className={styles.logo}>
@@ -32,14 +34,22 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : '');
 
 const Header = () => {
   const naviagte = useNavigate();
+  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [username, setUsername] = useState('');
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
+        // console.log(user);
         setUsername(user.displayName);
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            username: user.displayName,
+            userID: user.uid,
+          })
+        );
       } else {
         setUsername('');
       }
