@@ -42,11 +42,19 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // console.log(user);
-        setUsername(user.displayName);
+
+        if (user.displayName === null) {
+          const u1 = user.email.slice(0, -10);
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          setUsername(uName);
+        } else {
+          setUsername(user.displayName);
+        }
+
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
-            username: user.displayName,
+            username: user.displayName ? user.displayName : username,
             userID: user.uid,
           })
         );
@@ -54,7 +62,7 @@ const Header = () => {
         setUsername('');
       }
     });
-  }, []);
+  }, [dispatch, username]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
